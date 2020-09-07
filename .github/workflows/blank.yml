@@ -22,14 +22,14 @@ jobs:
       # Runs a single command using the runners shell
       - name: Test if new release
         run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GeoGuess Updater"
           git remote add main https://github.com/BilelJegham/RepoRelease
           git fetch --tags main
           tag=$(curl "https://api.github.com/repos/BilelJegham/RepoRelease/releases/latest" | grep -oP '(?<="tag_name": ")[^"]*')     
           git merge -X theirs --allow-unrelated-histories $tag
       - name: Commit
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GeoGuess Updater"
           git add .
           git diff-index --quiet HEAD || git commit -m "tag: $tag" -a
       - name: GitHub Push
