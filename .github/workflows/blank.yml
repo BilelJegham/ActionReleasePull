@@ -19,7 +19,7 @@ jobs:
         curl "https://api.github.com/repos/BilelJegham/RepoRelease/releases/latest" | grep -oP '(?<="tag_name": ")[^"]*'
 
      - id: tagActual
-       run: echo "beta2"
+       run: echo "beta3"
        #cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]'
 
 
@@ -39,15 +39,12 @@ jobs:
       # Runs a single command using the runners shell
       - name: Test if new release
         run: |
+          echo ${{ needs.checkTag.outputs.lastTag }}
           git config --local user.email "action@github.com"
           git config --local user.name "GeoGuess Updater"
           git remote add main https://github.com/BilelJegham/RepoRelease
           git fetch --tags main
           git merge -X theirs --allow-unrelated-histories ${{ needs.checkTag.outputs.lastTag }}
-      - name: Commit
-        run: |
-          git add .
-          git diff-index --quiet HEAD || git commit -m "tag: ${{ needs.checkTag.outputs.lastTag }}" -a
       - name: GitHub Push
         uses: ad-m/github-push-action@v0.5.0
         with:
