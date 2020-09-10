@@ -12,7 +12,7 @@ on:
 
 
 jobs:
-  job1:
+  checkTag:
     runs-on: ubuntu-latest
     # Map a step output to a job output
     outputs:
@@ -28,6 +28,7 @@ jobs:
 
   job2:
     runs-on: ubuntu-latest
-    needs: job1
+    needs: checkTag
+    if: ${{ needs.checkTag.outputs.lastTag }}  != ${{ needs.checkTag.outputs.tagActual }}
     steps:
-    - run: echo ${{needs.job1.outputs.lastTag}} ${{needs.job1.outputs.tagActual}}
+    - run: echo ${{needs.checkTag.outputs.lastTag}} ${{needs.checkTag.outputs.tagActual}}
