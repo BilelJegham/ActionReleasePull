@@ -8,14 +8,16 @@ on:
  workflow_dispatch:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
- checkTag:  
+  checkTag:  
     runs-on: ubuntu-latest
     outputs:
       lastTag: ${{ steps.lastTag.outputs.test }}
       tagActual: ${{ steps.tagActual.outputs.test }}
     steps:
      - id: lastTag
-       run: curl "https://api.github.com/repos/BilelJegham/RepoRelease/releases/latest" | grep -oP '(?<="tag_name": ")[^"]*'
+       run: |
+        curl "https://api.github.com/repos/BilelJegham/RepoRelease/releases/latest" | grep -oP '(?<="tag_name": ")[^"]*'
+
      - id: tagActual
        run: echo "beta2"
        #cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]'
