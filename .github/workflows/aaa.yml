@@ -1,4 +1,4 @@
-name: Merge Translation
+name: Merge Translati
 
 on:
   pull_request:
