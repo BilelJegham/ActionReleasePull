@@ -2,16 +2,18 @@ name: Merge Translation
 
 on:
   pull_request:
+    types: ['opened', 'edited', 'reopened', 'synchronize']
 
 jobs:
   merge-me:
-    if: ${{ github.event.pull_request.title == 'Update README' && github.actor == 'BilelJegham' }}
+    if: ${{ github.event.pull_request.title == 'New Crowdin updates' && github.actor=== 'BilelJegham' )}}
     name: Merge
     runs-on: ubuntu-latest
     steps:
       - uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: translation
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Merge me!
         uses: ridedott/merge-me-action@v1
         with:
