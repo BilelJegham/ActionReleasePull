@@ -17,4 +17,5 @@ jobs:
       - name: Merge me!
         uses: ridedott/merge-me-action@v1
         with:
+          GITHUB_LOGIN: 'BilelJegham'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
